@@ -183,7 +183,7 @@ const arcPoints = movements.map((m, i) => ({
 
 // ─── RTL HELPER ──────────────────────────────────────────────────────────────
 const FA = { fontFamily: "'Vazirmatn', 'Tahoma', sans-serif", direction: "rtl", textAlign: "right" };
-const FA_SERIF = { fontFamily: "'Vazirmatn', 'Tahoma', serif", direction: "rtl", textAlign: "right" };
+const FA_SERIF = { fontFamily: "'Amiri', 'Vazirmatn', 'Tahoma', serif", direction: "rtl", textAlign: "right" };
 
 // ─── SHARED MODAL ────────────────────────────────────────────────────────────
 function Modal({ m, onClose }) {
@@ -231,10 +231,10 @@ function Modal({ m, onClose }) {
 }
 
 // ─── ARC SVG ─────────────────────────────────────────────────────────────────
-function ArcSVG({ selected, onSelect, light = false }) {
+function ArcSVG({ selected, onSelect, light = false, bgColor }) {
   const path = arcPoints.map((p, i) => `${i === 0 ? "M" : "L"} ${p.x} ${p.y}`).join(" ");
   const tc = light ? "rgba(15,26,46,0.45)" : "rgba(255,255,255,0.3)";
-  const bg = light ? "#f3ead5" : "#080705";
+  const bg = bgColor ?? (light ? "#f3ead5" : "#080705");
   return (
     <svg viewBox="0 0 1000 260" style={{ width: "100%", height: "100%" }}>
       <defs>
@@ -306,7 +306,7 @@ function ViewInteractive() {
       {/* Grid */}
       <div style={{ padding: "2rem 2rem 6rem", maxWidth: 1100, margin: "0 auto", direction: "rtl" }}>
         <p style={{ ...FA, fontSize: ".75rem", color: "#b8893a", marginBottom: "2rem" }}>پانزده موومان — کلیک کنید تا باز شود</p>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(180px,1fr))", gap: 1, background: "rgba(255,255,255,.05)" }}>
+        <div className="tw-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(180px,1fr))", gap: 1, background: "rgba(255,255,255,.05)" }}>
           {movements.map(m => {
             const sel = selected?.latin === m.latin;
             return (
@@ -368,14 +368,14 @@ function ViewPoetic() {
       {/* Hero */}
       <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "4rem 2rem", textAlign: "center", background: "radial-gradient(ellipse at center,rgba(15,26,46,.93),rgba(7,13,28,.98))", color: "#f3ead5", position: "relative", direction: "rtl" }}>
         <div style={{ position: "absolute", inset: 0, background: "radial-gradient(circle at 50% 30%,rgba(212,166,74,.15),transparent 60%)" }} />
-        <p style={{ ...FA, fontSize: ".8rem", color: "#d4a64a", marginBottom: "2.5rem", position: "relative" }}>ریکوییم ✦ کوشل ۶۲۶ ✦ ۱۷۹۱</p>
+        <p style={{ ...FA, fontSize: ".8rem", color: "#b8893a", marginBottom: "2.5rem", position: "relative" }}>ریکوییم ✦ کوشل ۶۲۶ ✦ ۱۷۹۱</p>
         <h1 style={{ ...FA_SERIF, fontWeight: 700, fontSize: "clamp(2.8rem,8vw,5.5rem)", lineHeight: 1.2, marginBottom: "1.5rem", position: "relative" }}>
           گذر روح<br />
-          <span style={{ color: "#d4a64a" }}>از ریکوییم موتزارت</span>
+          <span style={{ color: "#b8893a" }}>از ریکوییم موتزارت</span>
         </h1>
         <p style={{ fontFamily: "'Cinzel',serif", fontSize: ".8rem", letterSpacing: ".35em", color: "rgba(243,234,213,.6)", marginBottom: "3rem", position: "relative", direction: "ltr" }}>A MEDITATION IN FIFTEEN MOVEMENTS</p>
         <div style={{ width: 200, height: 1, background: "linear-gradient(90deg,transparent,#b8893a,transparent)", margin: "0 auto 2rem", position: "relative" }}>
-          <span style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", background: "#070d1c", padding: "0 1rem", color: "#d4a64a" }}>✦</span>
+          <span style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", background: "#070d1c", padding: "0 1rem", color: "#b8893a" }}>✦</span>
         </div>
         <p style={{ ...FA_SERIF, fontSize: "1.2rem", color: "rgba(243,234,213,.85)", maxWidth: 560, lineHeight: 2, position: "relative" }}>
           از نخستین دعا برای آرامش ابدی تا آخرین نور میان قدیسان — مراقبه‌ای بر مرگ، داوری و رحمت که در قبر خود آهنگساز ناتمام ماند.
@@ -409,7 +409,7 @@ function ViewPoetic() {
         {movements.map((m, idx) => {
           const isRight = idx % 2 === 0;
           return (
-            <div key={m.latin} onClick={() => setSelected(m)} style={{ display: "grid", gridTemplateColumns: "1fr 60px 1fr", gap: "2rem", alignItems: "start", marginBottom: "4.5rem", cursor: "pointer" }}>
+            <div key={m.latin} className="spine" onClick={() => setSelected(m)} style={{ display: "grid", gridTemplateColumns: "1fr 60px 1fr", gap: "2rem", alignItems: "start", marginBottom: "4.5rem", cursor: "pointer" }}>
               <div style={{ gridColumn: isRight ? 1 : 3, gridRow: 1, textAlign: isRight ? "left" : "right", direction: "rtl" }}>
                 <h3 style={{ ...FA_SERIF, fontWeight: 700, fontSize: "2rem", color: "#0f1a2e", lineHeight: 1.2, marginBottom: ".25rem" }}>{m.fa_title}</h3>
                 <p style={{ fontFamily: "'Cinzel',serif", fontStyle: "italic", fontSize: ".85rem", color: "#b8893a", marginBottom: ".75rem", direction: "ltr", textAlign: isRight ? "left" : "right" }}>{m.latin}</p>
@@ -432,15 +432,15 @@ function ViewPoetic() {
       {/* Themes dark */}
       <div style={{ background: "#0f1a2e", padding: "6rem 2rem", direction: "rtl" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <p style={{ ...FA, fontSize: ".8rem", color: "#d4a64a", marginBottom: ".75rem" }}>نخ‌های در تار و پود اثر</p>
-          <h2 style={{ ...FA_SERIF, fontWeight: 700, fontSize: "clamp(1.8rem,4vw,3rem)", color: "#f3ead5", marginBottom: "3rem" }}>هفت کلمه که <span style={{ color: "#d4a64a" }}>کل معنا</span> را حمل می‌کنند</h2>
+          <p style={{ ...FA, fontSize: ".8rem", color: "#b8893a", marginBottom: ".75rem" }}>نخ‌های در تار و پود اثر</p>
+          <h2 style={{ ...FA_SERIF, fontWeight: 700, fontSize: "clamp(1.8rem,4vw,3rem)", color: "#f3ead5", marginBottom: "3rem" }}>هفت کلمه که <span style={{ color: "#b8893a" }}>کل معنا</span> را حمل می‌کنند</h2>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(270px,1fr))", gap: "2rem" }}>
             {themes.map(t => (
               <div key={t.name_fa} style={{ border: "1px solid rgba(184,137,58,.3)", padding: "2rem 1.75rem", background: "rgba(7,13,28,.4)", transition: "all .4s" }}
-                onMouseEnter={e => { e.currentTarget.style.borderColor = "#d4a64a"; e.currentTarget.style.transform = "translateY(-4px)"; }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = "#b8893a"; e.currentTarget.style.transform = "translateY(-4px)"; }}
                 onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(184,137,58,.3)"; e.currentTarget.style.transform = "translateY(0)"; }}>
-                <div style={{ fontSize: "1.8rem", color: "#d4a64a", marginBottom: "1rem" }}>{t.icon}</div>
-                <h3 style={{ ...FA_SERIF, fontWeight: 700, fontSize: "1.2rem", color: "#d4a64a", marginBottom: ".75rem" }}>{t.name_fa}</h3>
+                <div style={{ fontSize: "1.8rem", color: "#b8893a", marginBottom: "1rem" }}>{t.icon}</div>
+                <h3 style={{ ...FA_SERIF, fontWeight: 700, fontSize: "1.2rem", color: "#b8893a", marginBottom: ".75rem" }}>{t.name_fa}</h3>
                 <p style={{ fontFamily: "'Cinzel',serif", fontStyle: "italic", fontSize: ".78rem", color: "#b8893a", marginBottom: "1rem", direction: "ltr" }}>{t.latin}</p>
                 <p style={{ ...FA_SERIF, fontSize: ".97rem", color: "rgba(243,234,213,.78)", lineHeight: 2 }}>{t.desc_fa}</p>
               </div>
@@ -480,7 +480,7 @@ function ViewMuseum() {
       {/* Museum bar */}
       <div style={{ background: "#1c1816", padding: ".6rem 2rem", display: "flex", justifyContent: "space-between", fontSize: ".7rem", letterSpacing: ".15em", borderBottom: "1px solid #8a6a2f", direction: "rtl" }}>
         <span style={{ ...FA, color: "#b8893a" }}>گالری موسیقی · نمایشگاه ویژه</span>
-        <span style={{ ...FA, color: "rgba(245,241,235,.5)" }}>سالن اول · ورود رایگان</span>
+        <span style={{ ...FA, color: "rgba(245,241,235,.5)" }}>گالری اول · ورود رایگان</span>
       </div>
 
       {/* Title wall */}
@@ -513,7 +513,7 @@ function ViewMuseum() {
           <p style={{ ...FA_SERIF, fontStyle: "italic", fontSize: "1.15rem", color: "#4a4540", marginBottom: "3rem", maxWidth: 700 }}>روی هر نقطه روی قوس یا هر اتاق گالری کلیک کنید تا متن و معنا را بخوانید.</p>
           <div style={{ background: "#f5f1eb", border: "1px solid #c9bfa9", padding: "3rem 2rem", position: "relative" }}>
             <div style={{ position: "absolute", top: -10, right: "2rem", background: "#faf7f1", padding: "0 .75rem", ...FA, fontSize: ".65rem", color: "#8a6a2f" }}>شکل اول</div>
-            <div style={{ height: 280 }}><ArcSVG selected={selected} onSelect={setSelected} light /></div>
+            <div style={{ height: 280 }}><ArcSVG selected={selected} onSelect={setSelected} light bgColor="#f5f1eb" /></div>
           </div>
         </div>
       </div>
@@ -525,7 +525,7 @@ function ViewMuseum() {
           <div key={m.latin} onClick={() => setSelected(m)} style={{ padding: "4rem 3rem", borderBottom: "1px solid #c9bfa9", background: even ? "#faf7f1" : "#f5f1eb", cursor: "pointer", transition: "background .2s", direction: "rtl" }}
             onMouseEnter={e => e.currentTarget.style.background = even ? "#f0ece2" : "#ece8de"}
             onMouseLeave={e => e.currentTarget.style.background = even ? "#faf7f1" : "#f5f1eb"}>
-            <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "200px 1fr", gap: "3.5rem", alignItems: "start" }}>
+            <div className="mu-grid" style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "200px 1fr", gap: "3.5rem", alignItems: "start" }}>
               {/* Label */}
               <div style={{ direction: "rtl" }}>
                 <p style={{ ...FA, fontSize: ".65rem", color: "#8a6a2f", marginBottom: ".6rem" }}>موومان {m.num}</p>
@@ -626,11 +626,11 @@ export default function App() {
   return (
     <>
       <style>{`
-        
+        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700&family=Amiri:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@400;500;600&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
         ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-track { background: #0f0c08; }
-        ::-webkit-scrollbar-thumb { background: #3a2a1a; border-radius: 2px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(184,137,58,.4); border-radius: 2px; }
         @keyframes slideUp { from { opacity:0;transform:translateY(20px) } to { opacity:1;transform:translateY(0) } }
         @media (max-width: 700px) {
           .tw-grid { grid-template-columns: 1fr !important; }
