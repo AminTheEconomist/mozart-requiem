@@ -183,7 +183,7 @@ const arcPoints = movements.map((m, i) => ({
 
 // ─── RTL HELPER ──────────────────────────────────────────────────────────────
 const FA = { fontFamily: "'Vazirmatn', 'Tahoma', sans-serif", direction: "rtl", textAlign: "right" };
-const FA_SERIF = { fontFamily: "'Amiri', 'Vazirmatn', 'Tahoma', serif", direction: "rtl", textAlign: "right" };
+const FA_SERIF = { fontFamily: "'Vazirmatn', 'Tahoma', serif", direction: "rtl", textAlign: "right" };
 
 // ─── SHARED MODAL ────────────────────────────────────────────────────────────
 function Modal({ m, onClose }) {
@@ -247,7 +247,7 @@ function ArcSVG({ selected, onSelect, light = false }) {
           <stop offset="100%" stopColor="#8b1e1e" stopOpacity="0" />
         </linearGradient>
       </defs>
-      {[["وحشت", 25], ["غم", 120], ["آرامش", 215]].map(([l, y]) => (
+      {[["آرامش", 25], ["غم", 120], ["وحشت", 215]].map(([l, y]) => (
         <g key={l}>
           <line x1="50" x2="940" y1={y} y2={y} stroke="rgba(128,100,60,0.15)" strokeDasharray="3,4" />
           <text x="956" y={y + 4} textAnchor="start" fill={tc} style={{ fontFamily: "Vazirmatn,Tahoma,sans-serif", fontSize: 9 }}>{l}</text>
@@ -626,7 +626,7 @@ export default function App() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700&family=Amiri:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@400;500;600&display=swap');
+        
         * { box-sizing: border-box; margin: 0; padding: 0; }
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: #0f0c08; }
