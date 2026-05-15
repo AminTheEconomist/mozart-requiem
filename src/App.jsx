@@ -17,7 +17,7 @@ const VIEWS = {
 const VIEW_ORDER = ["interactive", "poetic", "museum", "cinematic", "minimal", "editorial", "illuminated", "sheet"];
 
 export default function App() {
-  const [view, setView] = useState("interactive");
+  const [view, setView] = useState("poetic");
   const [lang, setLang] = useState("fa");
   const ViewComponent = VIEWS[view];
   const labels = STR[lang].viewLabels;
