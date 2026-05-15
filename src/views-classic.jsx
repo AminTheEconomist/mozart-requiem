@@ -153,8 +153,11 @@ export function ViewPoetic({ lang }) {
                 <p style={{ fontFamily: "'Cinzel',serif", fontStyle: "italic", fontSize: ".88rem", color: "#b8893a", marginBottom: ".75rem", direction: "ltr", textAlign: "inherit" }}>{m.latin}</p>
                 {m.text[0] && (
                   <div style={{ borderTop: "1px solid #b8893a", borderBottom: "1px solid #b8893a", padding: ".85rem 0", margin: ".75rem 0" }}>
-                    <p style={{ ...SERIF(lang), textAlign: "inherit", fontSize: "1.14rem", color: "#6b1f1f", lineHeight: 1.9, marginBottom: ".45rem" }}>{m.text[0][lang].split("\n")[0]}</p>
-                    <p style={{ fontFamily: "'Cinzel',serif", fontStyle: "italic", fontSize: ".82rem", color: "rgba(15,26,46,.65)", direction: "ltr", textAlign: "inherit" }}>{m.text[0].la.split("\n")[0]}</p>
+                    <p style={{ ...SERIF(lang), textAlign: "inherit", fontSize: "1.14rem", color: "#6b1f1f", lineHeight: 1.9, marginBottom: ".4rem" }}>{m.text[0][lang].split("\n")[0]}</p>
+                    <p style={{ fontFamily: "'Cinzel',serif", fontStyle: "italic", fontSize: ".82rem", color: "rgba(15,26,46,.65)", direction: "ltr", textAlign: "inherit", marginBottom: ".25rem" }}>{m.text[0].la.split("\n")[0]}</p>
+                    {m.text[0].phon && (
+                      <p style={{ fontFamily: "'Inter',sans-serif", fontStyle: "italic", fontSize: ".75rem", color: "#8b6f3a", direction: "ltr", textAlign: "inherit", letterSpacing: ".02em" }}>{m.text[0].phon.split("\n")[0]}</p>
+                    )}
                   </div>
                 )}
                 <p style={{ ...SERIF(lang), textAlign: "inherit", fontSize: "1.1rem", lineHeight: 2.1, color: "rgba(15,26,46,.88)" }}>{L.meaning.split("\n\n")[0]}</p>
@@ -284,7 +287,10 @@ export function ViewMuseum({ lang }) {
                   <p style={{ ...SANS(lang), fontSize: ".78rem", color: "#8a6a2f", marginBottom: ".75rem" }}>{t.latinHeader}</p>
                   {m.text.map((tx, i) => (
                     <div key={i} style={{ marginBottom: "1.2rem" }}>
-                      <p style={{ ...LATIN, fontSize: "1.02rem", color: "#8b3a2a", lineHeight: 1.75, marginBottom: ".4rem", textAlign: alignFor(lang), whiteSpace: "pre-line" }}>{tx.la}</p>
+                      <p style={{ ...LATIN, fontSize: "1.02rem", color: "#8b3a2a", lineHeight: 1.7, marginBottom: ".25rem", textAlign: alignFor(lang), whiteSpace: "pre-line" }}>{tx.la}</p>
+                      {tx.phon && (
+                        <p style={{ fontFamily: "'Inter',sans-serif", fontStyle: "italic", fontSize: ".82rem", color: "#8b6f3a", lineHeight: 1.6, marginBottom: ".4rem", direction: "ltr", textAlign: alignFor(lang), letterSpacing: ".02em", whiteSpace: "pre-line" }}>{tx.phon}</p>
+                      )}
                       <p style={{ ...SERIF(lang), fontSize: "1.18rem", color: "#2a1a0a", lineHeight: 2, whiteSpace: "pre-line" }}>{tx[lang]}</p>
                     </div>
                   ))}

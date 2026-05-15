@@ -57,10 +57,14 @@ export function Modal({ m, lang, onClose }) {
         <div style={{ ...SANS(lang), fontSize: ".78rem", letterSpacing: ".08em", color: "rgba(255,255,255,.55)", marginBottom: "1rem" }}>{t.latinHeader}</div>
         {m.text.map((tx, i) => (
           <div key={i} style={{ marginBottom: "1.75rem", [isFA(lang) ? "paddingRight" : "paddingLeft"]: "1.25rem", [isFA(lang) ? "borderRight" : "borderLeft"]: `2px solid ${m.color}66` }}>
-            <p style={{ ...LATIN, fontSize: "1.08rem", color: m.color, lineHeight: 1.8, marginBottom: ".6rem", whiteSpace: "pre-line" }}>{tx.la}</p>
+            <p style={{ ...LATIN, fontSize: "1.08rem", color: m.color, lineHeight: 1.75, marginBottom: ".35rem", whiteSpace: "pre-line" }}>{tx.la}</p>
+            {tx.phon && (
+              <p style={{ fontFamily: "'Inter','Helvetica Neue',sans-serif", fontSize: ".88rem", color: m.color + "BB", lineHeight: 1.7, marginBottom: ".6rem", direction: "ltr", textAlign: "left", letterSpacing: ".03em", whiteSpace: "pre-line", fontStyle: "italic" }}>{tx.phon}</p>
+            )}
             <p style={{ ...SERIF(lang), fontSize: "1.22rem", color: "rgba(255,255,255,.92)", lineHeight: 2.1, whiteSpace: "pre-line" }}>{tx[lang]}</p>
           </div>
         ))}
+        <p style={{ ...SANS(lang), fontSize: ".7rem", color: "rgba(255,255,255,.4)", marginBottom: "1rem", marginTop: "-.5rem", fontStyle: "italic" }}>{t.phonNote}</p>
 
         <div style={{ ...SANS(lang), fontSize: ".78rem", letterSpacing: ".08em", color: "rgba(255,255,255,.55)", margin: "1.75rem 0 1rem" }}>{t.meaningHeader}</div>
         {L.meaning.split("\n\n").map((p, i) => (
@@ -98,19 +102,29 @@ export function ArcSVG({ selected, onSelect, lang, light = false, bgColor }) {
       </defs>
       {[[labels.peace, 25], [labels.sorrow, 120], [labels.dread, 215]].map(([l, y]) => (
         <g key={l}>
-          <line x1="50" x2="940" y1={y} y2={y} stroke="rgba(128,100,60,0.18)" strokeDasharray="3,4" />
-          <text x="956" y={y + 4} textAnchor="start" fill={tc} style={{ fontFamily: "Vazirmatn,Inter,Tahoma,sans-serif", fontSize: 11 }}>{l}</text>
+          <line x1="60" x2="930" y1={y} y2={y} stroke="rgba(128,100,60,0.18)" strokeDasharray="3,4" />
+          <text x="52" y={y + 4} textAnchor="end" fill={tc} style={{ fontFamily: "Vazirmatn,Inter,Tahoma,sans-serif", fontSize: 11 }}>{l}</text>
         </g>
       ))}
       <path d={`${path} L ${arcPoints[arcPoints.length - 1].x} 240 L ${arcPoints[0].x} 240 Z`} fill="url(#fg2)" />
       <path d={path} fill="none" stroke="url(#ag2)" strokeWidth="2.2" strokeLinejoin="round" />
       {arcPoints.map((p, i) => {
         const sel = selected?.latin === p.m.latin;
+        const labelAbove = i % 2 === 0;
         return (
           <g key={i} onClick={() => onSelect(p.m)} style={{ cursor: "pointer" }}>
-            <circle cx={p.x} cy={p.y} r={sel ? 9 : 5} fill={sel ? p.m.color : bg} stroke={p.m.color} strokeWidth="2" style={{ transition: "r .2s,fill .2s" }} />
-            <text x={p.x} y={p.y - 13} textAnchor="middle" fill={sel ? p.m.color : tc}
-              style={{ fontFamily: "Vazirmatn,Inter,Tahoma,sans-serif", fontSize: 10, pointerEvents: "none" }}>{p.m[lang].title}</text>
+            <circle cx={p.x} cy={p.y} r={sel ? 10 : 5} fill={sel ? p.m.color : bg} stroke={p.m.color} strokeWidth="2" style={{ transition: "r .2s,fill .2s" }} />
+            {/* Always-visible Roman numeral — small, tidy, never overlaps */}
+            <text x={p.x} y={p.y - 11} textAnchor="middle" fill={sel ? p.m.color : tc}
+              style={{ fontFamily: "'Cinzel',serif", fontSize: 9, fontWeight: 600, letterSpacing: ".05em", pointerEvents: "none" }}>{p.m.num}</text>
+            {/* Full title appears only for the selected point, alternating above/below */}
+            {sel && (
+              <g>
+                <rect x={p.x - 50} y={labelAbove ? p.y - 32 : p.y + 14} width="100" height="18" rx="3" fill={bg} opacity="0.92" />
+                <text x={p.x} y={labelAbove ? p.y - 19 : p.y + 27} textAnchor="middle" fill={p.m.color}
+                  style={{ fontFamily: "Vazirmatn,Inter,Tahoma,sans-serif", fontSize: 11, fontWeight: 700, pointerEvents: "none" }}>{p.m[lang].title}</text>
+              </g>
+            )}
           </g>
         );
       })}

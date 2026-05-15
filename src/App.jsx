@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { STR } from "./content.js";
 import { ViewInteractive, ViewPoetic, ViewMuseum } from "./views-classic.jsx";
-import { ViewCinematic, ViewMinimal, ViewEditorial, ViewIlluminated, ViewSheetMusic } from "./views-new.jsx";
+import { ViewCinematic, ViewMinimal, ViewEditorial, ViewIlluminated, ViewSheetMusic, ViewPerformance } from "./views-new.jsx";
+import { FeedbackWidget } from "./FeedbackWidget.jsx";
 
 const VIEWS = {
   interactive: ViewInteractive,
@@ -12,9 +13,10 @@ const VIEWS = {
   editorial: ViewEditorial,
   illuminated: ViewIlluminated,
   sheet: ViewSheetMusic,
+  performance: ViewPerformance,
 };
 
-const VIEW_ORDER = ["interactive", "poetic", "museum", "cinematic", "minimal", "editorial", "illuminated", "sheet"];
+const VIEW_ORDER = ["interactive", "poetic", "museum", "cinematic", "minimal", "editorial", "illuminated", "performance", "sheet"];
 
 export default function App() {
   const [view, setView] = useState("poetic");
@@ -63,6 +65,8 @@ export default function App() {
       </div>
 
       <ViewComponent lang={lang} />
+
+      <FeedbackWidget lang={lang} view={view} selected={null} />
     </>
   );
 }
